@@ -22,7 +22,7 @@ app.innerHTML = `
   </header>
   <main id="main">
     <section class="hero" aria-labelledby="hero-title">
-      <video class="hero-video" autoplay muted loop playsinline poster="https://images.pexels.com/videos/15687652/pexels-photo-15687652.jpeg?auto=compress&w=1600&h=900&dpr=1" aria-label="Aerial video of a rugged mountain landscape">
+      <video class="hero-video" muted loop playsinline webkit-playsinline preload="none" poster="https://images.pexels.com/videos/15687652/pexels-photo-15687652.jpeg?auto=compress&w=960&h=540&dpr=1" aria-label="Aerial video of a rugged mountain landscape">
         <source src="https://videos.pexels.com/video-files/15687652/15687652-uhd_2560_1440_25fps.mp4" type="video/mp4" />
       </video>
       <div class="hero-shade"></div><div class="hero-grain"></div>
@@ -157,28 +157,66 @@ app.innerHTML = `
 const motionButton = document.querySelector('.motion-toggle');
 const heroVideo = document.querySelector('.hero-video');
 const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
-if (motionPreference.matches) {
-  heroVideo.pause();
-  motionButton.setAttribute('aria-pressed', 'false');
-  motionButton.innerHTML = '<span class="motion-state">▶</span> Play motion';
+const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+const saveData = Boolean(connection?.saveData) || /(^|-)2g$/.test(connection?.effectiveType || '');
+const staticHero = motionPreference.matches || saveData;
+let userPausedHero = staticHero;
+
+function updateMotionButton(playing) {
+  motionButton.setAttribute('aria-pressed', String(playing));
+  motionButton.innerHTML = `<span class="motion-state">${playing ? 'Ⅱ' : '▶'}</span> ${playing ? 'Pause motion' : 'Play motion'}`;
 }
+
+function playHeroVideo() {
+  heroVideo.play().then(() => updateMotionButton(true)).catch(() => updateMotionButton(false));
+}
+
+if (staticHero) {
+  heroVideo.pause();
+  updateMotionButton(false);
+} else {
+  userPausedHero = false;
+  playHeroVideo();
+}
+
 motionButton.addEventListener('click', () => {
-  const isPlaying = !heroVideo.paused;
-  if (isPlaying) heroVideo.pause(); else heroVideo.play().catch(() => {});
-  motionButton.setAttribute('aria-pressed', String(!isPlaying));
-  motionButton.innerHTML = `<span class="motion-state">${isPlaying ? '▶' : 'Ⅱ'}</span> ${isPlaying ? 'Play motion' : 'Pause motion'}`;
+  if (!heroVideo.paused) {
+    userPausedHero = true;
+    heroVideo.pause();
+    updateMotionButton(false);
+  } else {
+    userPausedHero = false;
+    playHeroVideo();
+  }
+});
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    heroVideo.pause();
+    updateMotionButton(false);
+  } else if (!staticHero && !userPausedHero) {
+    playHeroVideo();
+  }
 });
 
 const menuToggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.main-nav');
+function setMenuOpen(open) {
+  menuToggle.setAttribute('aria-expanded', String(open));
+  menuToggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+  nav.classList.toggle('is-open', open);
+}
+
 menuToggle.addEventListener('click', () => {
-  const open = menuToggle.getAttribute('aria-expanded') === 'true';
-  menuToggle.setAttribute('aria-expanded', String(!open));
-  nav.classList.toggle('is-open', !open);
+  setMenuOpen(menuToggle.getAttribute('aria-expanded') !== 'true');
 });
-nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
-  nav.classList.remove('is-open'); menuToggle.setAttribute('aria-expanded', 'false');
-}));
+nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenuOpen(false)));
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && menuToggle.getAttribute('aria-expanded') === 'true') {
+    setMenuOpen(false);
+    menuToggle.focus();
+  }
+});
 
 const fitResponses = {
   outdoors: ['A little field time goes a long way.', 'Try one local trail, then check how far everyday services are from the address you like.'],
