@@ -11,7 +11,7 @@ const places = [
 const app = document.querySelector('#app');
 app.innerHTML = `
   <a class="skip-link" href="#main">Skip to content</a>
-  <div class="announcement"><span class="announcement-dot"></span> A fresh perspective on mountain living <a href="#about">Discover the guide <span aria-hidden="true">↓</span></a></div>
+  <div class="announcement"><span class="announcement-dot"></span><span class="announcement-full">TEHACHAPI LIFESTYLE IS PROUDLY SPONSORED BY</span><span class="announcement-short">PROUDLY SPONSORED BY</span><a href="https://aspen2homes.com/" target="_blank" rel="noreferrer" aria-label="Visit Aspen 2 Homes">ASPEN 2 HOMES ↗</a></div>
   <header class="site-header" id="top">
     <a class="brand brand-image" href="#top" aria-label="Tehachapi Lifestyle home"><span class="logo-crop"><img src="/images/tehachapi-lifestyle-logo.jpg" alt="" /></span></a>
     <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false"><span></span><span></span></button>
@@ -41,23 +41,18 @@ app.innerHTML = `
 
     <div class="ticker" aria-label="Tehachapi lifestyle highlights"><div class="ticker-track">${Array.from({ length: 2 }, () => '<span>A weekend well spent</span><i>✳</i><span>Vineyard afternoons</span><i>✳</i><span>Mountain air</span><i>✳</i><span>Still California</span><i>✳</i>').join('')}</div></div>
 
-    <section class="welcome-strip section-pad" aria-label="Plan a Tehachapi visit">
-      <div><span class="eyebrow"><span class="sun-icon">✳</span> FOR WEEKEND WANDERERS & FUTURE LOCALS</span><p>Los Angeles, Bakersfield, Palmdale–Lancaster, or somewhere else? Come see the mountains for yourself.</p></div>
-      <div class="welcome-actions"><a href="#weekend">Build a weekend around what you love <span>↗</span></a><a href="#moving">Curious about a move? <span>↗</span></a></div>
-    </section>
-
-    <section class="intro section-pad" id="lifestyle">
-      <div class="section-label"><span>01 / THE LIFESTYLE</span><span>LESS RUSH. MORE LIFE.</span></div>
-      <div class="intro-grid">
-        <h2 class="display-heading reveal">Come for the views.<br><em>Get to know</em><br>the everyday.</h2>
-        <div class="intro-copy reveal"><p class="lead">What does an ordinary week look like here?</p><p>A walk outdoors, a stop downtown, a local event you decide to try. It can also mean planning around wind, winter weather or a trip out of town.</p><p>Get beyond the weekend view and see how Tehachapi fits the way you actually live.</p><a class="under-link" href="#fit">Let’s figure that out ${arrow}</a></div>
+    <section class="amenities-overview section-pad" aria-labelledby="amenities-title">
+      <div class="amenities-heading">
+        <div><span class="eyebrow"><span class="sun-icon">✳</span> THE TEHACHAPI SHORT LIST</span><h2 id="amenities-title">Wine country. Open trails.<br><em>Room to make it yours.</em></h2></div>
+        <div class="amenities-lead"><p>Come for a weekend from Los Angeles, Bakersfield, Palmdale–Lancaster, or beyond. Taste local wine, get outside, explore downtown—and see which parts make you want to come back.</p><a href="#weekend">Build your visit <span>↗</span></a><a href="#moving">Thinking about a move? <span>↗</span></a></div>
       </div>
-      <div class="story-image reveal"><img src="https://tehachapi-lifestyle.tattoobillyvon.chatgpt.site/assets/valley.webp" alt="Looking north from Cummings Mountain toward the Sierra crest and surrounding peaks" loading="lazy" referrerpolicy="no-referrer"><div class="image-index">A NEW POINT OF VIEW <span>↗</span></div><div class="image-note"><span class="small-sun">✳</span><span>Wide-open views.<br><i>A little more room.</i></span></div><span class="image-caption">Looking north from Cummings Mountain</span></div>
-      <div class="value-grid">
-        <article class="value-card reveal"><span class="value-icon">↟</span><h3>Outside can be part of the day.</h3><p>Explore local trails, parks and outdoor places, then check what’s genuinely convenient from the address you’re considering.</p></article>
-        <article class="value-card reveal"><span class="value-icon">☼</span><h3>Get to know the seasons.</h3><p>Wind and winter weather are part of the conversation. Elevation, exposure and access roads matter.</p></article>
-        <article class="value-card reveal"><span class="value-icon">⌁</span><h3>A different pace has tradeoffs.</h3><p>Fewer choices can feel refreshing or inconvenient. Spend time downtown and try an ordinary errand.</p></article>
+      <div class="amenity-grid">
+        <a class="amenity-card" href="#wine"><span class="amenity-number">01 / SIP</span><span class="amenity-icon">◒</span><h3>Mountain wine life</h3><p>Explore the Tehachapi Mountains AVA, from Cummings Valley vineyards to downtown tasting rooms.</p><span class="amenity-link">Meet the wine country ↗</span></a>
+        <a class="amenity-card" href="https://visittehachapi.com/see_and_do" target="_blank" rel="noreferrer"><span class="amenity-number">02 / OUTSIDE</span><span class="amenity-icon">↟</span><h3>Trails, lakes & open air</h3><p>Find local trails, parks and recreation spots for a hike, lakeside pause or long afternoon outdoors.</p><span class="amenity-link">Explore outdoor activities ↗</span></a>
+        <a class="amenity-card" href="https://visittehachapi.com/see_and_do" target="_blank" rel="noreferrer"><span class="amenity-number">03 / DOWNTOWN</span><span class="amenity-icon">⌂</span><h3>Small-town character</h3><p>Browse local food, arts, shops, museums and events, then find your own favorite stop.</p><span class="amenity-link">See what’s happening ↗</span></a>
+        <a class="amenity-card" href="https://visittehachapi.com/attractions/12" target="_blank" rel="noreferrer"><span class="amenity-number">04 / LANDMARK</span><span class="amenity-icon">〰</span><h3>The Tehachapi Loop</h3><p>A memorable railroad landmark in the mountains and an easy reason to take the scenic way.</p><span class="amenity-link">Plan a Loop visit ↗</span></a>
       </div>
+      <p class="amenities-footnote">Hours, access, event calendars and seasonal conditions vary—check official sources before you go.</p>
     </section>
 
     <section class="wine-section section-pad" id="wine">
@@ -75,6 +70,20 @@ app.innerHTML = `
           <a class="under-link" href="https://tehachapimountainswinegrowers.com/" target="_blank" rel="noreferrer">Meet the local wine growers ${arrow}</a>
           <p class="wine-note">Hours, reservations, tastings and events vary by winery; check directly before you go. Please taste responsibly and plan a safe ride.</p>
         </div>
+      </div>
+    </section>
+
+    <section class="intro section-pad" id="lifestyle">
+      <div class="section-label"><span>01 / THE LIFESTYLE</span><span>LESS RUSH. MORE LIFE.</span></div>
+      <div class="intro-grid">
+        <h2 class="display-heading reveal">Come for the views.<br><em>Get to know</em><br>the everyday.</h2>
+        <div class="intro-copy reveal"><p class="lead">What does an ordinary week look like here?</p><p>A walk outdoors, a stop downtown, a local event you decide to try. It can also mean planning around wind, winter weather or a trip out of town.</p><p>Get beyond the weekend view and see how Tehachapi fits the way you actually live.</p><a class="under-link" href="#fit">Let’s figure that out ${arrow}</a></div>
+      </div>
+      <div class="story-image reveal"><img src="https://tehachapi-lifestyle.tattoobillyvon.chatgpt.site/assets/valley.webp" alt="Looking north from Cummings Mountain toward the Sierra crest and surrounding peaks" loading="lazy" referrerpolicy="no-referrer"><div class="image-index">A NEW POINT OF VIEW <span>↗</span></div><div class="image-note"><span class="small-sun">✳</span><span>Wide-open views.<br><i>A little more room.</i></span></div><span class="image-caption">Looking north from Cummings Mountain</span></div>
+      <div class="value-grid">
+        <article class="value-card reveal"><span class="value-icon">↟</span><h3>Outside can be part of the day.</h3><p>Explore local trails, parks and outdoor places, then check what’s genuinely convenient from the address you’re considering.</p></article>
+        <article class="value-card reveal"><span class="value-icon">☼</span><h3>Get to know the seasons.</h3><p>Wind and winter weather are part of the conversation. Elevation, exposure and access roads matter.</p></article>
+        <article class="value-card reveal"><span class="value-icon">⌁</span><h3>A different pace has tradeoffs.</h3><p>Fewer choices can feel refreshing or inconvenient. Spend time downtown and try an ordinary errand.</p></article>
       </div>
     </section>
 
